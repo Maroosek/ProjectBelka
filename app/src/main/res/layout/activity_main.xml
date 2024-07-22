@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ScoreValue"
-        app:layout_constraintBottom_toTopOf="@+id/buttonxd"
+        app:layout_constraintBottom_toTopOf="@+id/scoreButton"
         app:layout_constraintEnd_toEndOf="@+id/scorePerSecond"
         app:layout_constraintStart_toStartOf="@+id/scorePerSecond"
         app:layout_constraintTop_toBottomOf="@+id/scorePerSecond" />
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
         android:text="SPS"
-        app:layout_constraintBottom_toTopOf="@+id/buttonxd"
+        app:layout_constraintBottom_toTopOf="@+id/scoreButton"
         app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -129,7 +129,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Upgrade 3"
-        app:layout_constraintBottom_toTopOf="@+id/buttonxd"
+        app:layout_constraintBottom_toTopOf="@+id/scoreButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
@@ -161,7 +161,7 @@
         app:layout_constraintVertical_bias="0.189" />
 
     <Button
-        android:id="@+id/buttonxd"
+        android:id="@+id/scoreButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Button"

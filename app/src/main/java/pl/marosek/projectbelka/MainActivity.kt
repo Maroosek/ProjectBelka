@@ -8,7 +8,7 @@ import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
     //initial values
-    var score = 0
+/*    var score = 0
     var scorePerSecond = 0
 
     var upgrade1Price = 10
@@ -20,14 +20,17 @@ class MainActivity : AppCompatActivity() {
     var upgrade4Price = 10000
     var upgrade4Value = 1000
     var upgrade5Price = 100000
-    var upgrade5Value = 10000
+    var upgrade5Value = 10000*/
+
+    val game = GameFunction()
+    val scoreData = GameScoreData()
+    val upgradeData = GameUpgradeData()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var btn = findViewById<Button>(R.id.buttonxd)
-        var text = findViewById<TextView>(R.id.textView)
+        var scoreButton = findViewById<Button>(R.id.scoreButton)
         var scoreTotalText = findViewById<TextView>(R.id.scoreTotal)
         var scorePerSecondText = findViewById<TextView>(R.id.scorePerSecond)
         var upgrade1text = findViewById<TextView>(R.id.upgradeText1)
@@ -41,31 +44,30 @@ class MainActivity : AppCompatActivity() {
         var upgrade5text = findViewById<TextView>(R.id.upgradeText5)
         var upgrade5 = findViewById<Button>(R.id.buttonUpgrade5)
 
-
-        //val delay = 1000
-
         loadGame()
+        //startIdle(scorePerSecond, scoreTotalText)
 
-        btn.setOnClickListener {
-            //GameFunction().addNumber(upgrade1Value, scoreTotalText)
-            addNumber(upgrade1Value, scoreTotalText)
-            //Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show()
-            //refreshText(upgrade1text, upgrade1Price)
+        scoreButton.setOnClickListener {
+            scoreData.score = game.addNumber(upgradeData.upgrade1Value, scoreData.score)
+
+            scoreTotalText.text = scoreData.score.toString()
         }
 
         upgrade1.setOnClickListener {
-            if (score >= upgrade1Price) {
-            score -= upgrade1Price
-            upgrade1Price *= 4
-            upgrade1Value *= 2
-            upgrade1text.text = upgrade1Price.toString()
-            scoreTotalText.text = score.toString()
-            addNumberPerSecond(upgrade1Value, scorePerSecondText)
-            //upgrade1text.text = upgrade1Value.toString()
-            //upgrade1text.text
-        } else {
+            if (scoreData.score < upgradeData.upgrade1Price) {
             Toast.makeText(this, "Not enough cash", Toast.LENGTH_SHORT).show()
-        }
+
+            return@setOnClickListener
+            }
+        scoreData.score -= upgradeData.upgrade1Price
+        upgradeData.upgrade1Price *= 4
+        upgradeData.upgrade1Value *= 2
+        upgrade1text.text = upgradeData.upgrade1Price.toString()
+        scoreTotalText.text = scoreData.score.toString()
+        var dupa = game.addNumberPerSecond(upgradeData.upgrade1Value)
+        //addNumberPerSecond(upgradeData.upgrade1Value, scorePerSecondText)
+        //upgrade1text.text = upgrade1Value.toString()
+        //upgrade1text.text
         }
     }
 
@@ -84,16 +86,11 @@ class MainActivity : AppCompatActivity() {
         saveGame()
     }
 
-    fun addNumber(number: Int, text: TextView) {
-        score += number
-        text.text = score.toString()
-    }
-
-    fun addNumberPerSecond(number: Int, text: TextView) {
-        scorePerSecond += number / 10
-        text.text = scorePerSecond.toString()
-        refreshText(findViewById(R.id.scorePerSecond), scorePerSecond)
-    }
+/*    fun addNumberPerSecond(number: Int, text: TextView) {
+        scoreData.scorePerSecond += number / 10
+        text.text = scoreData.scorePerSecond.toString()
+        //refreshText(findViewById(R.id.scorePerSecond), scorePerSecond)
+    }*/
 
     fun refreshText(text: TextView, number: Int) {
         text.text = number.toString()
@@ -101,27 +98,28 @@ class MainActivity : AppCompatActivity() {
 
     fun loadGame() {
         val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
-        score = sharedPreferences.getInt("score", 0)
-        scorePerSecond = sharedPreferences.getInt("scorePerSecond", 0)
-        upgrade1Price = sharedPreferences.getInt("upgrade1Price", 10)
+        scoreData.score = sharedPreferences.getInt("score", 0)
+        scoreData.scorePerSecond = sharedPreferences.getInt("scorePerSecond", 0)
+        upgradeData.upgrade1Price = sharedPreferences.getInt("upgrade1Price", 10)
         //Add other upgrades
 
-        refreshText(findViewById(R.id.scoreTotal), score)
-        refreshText(findViewById(R.id.scorePerSecond), scorePerSecond)
-        refreshText(findViewById(R.id.upgradeText1), upgrade1Price)
-        refreshText(findViewById(R.id.upgradeText2), upgrade2Price)
-        refreshText(findViewById(R.id.upgradeText3), upgrade3Price)
-        refreshText(findViewById(R.id.upgradeText4), upgrade4Price)
-        refreshText(findViewById(R.id.upgradeText5), upgrade5Price)
+        refreshText(findViewById(R.id.scoreTotal), scoreData.score)
+        refreshText(findViewById(R.id.scorePerSecond), scoreData.scorePerSecond)
+        refreshText(findViewById(R.id.upgradeText1), upgradeData.upgrade1Price)
+        refreshText(findViewById(R.id.upgradeText2), upgradeData.upgrade2Price)
+        refreshText(findViewById(R.id.upgradeText3), upgradeData.upgrade3Price)
+        refreshText(findViewById(R.id.upgradeText4), upgradeData.upgrade4Price)
+        refreshText(findViewById(R.id.upgradeText5), upgradeData.upgrade5Price)
 
     }
 
     fun saveGame() {
         val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
-        editor.putInt("score", score)
-        editor.putInt("scorePerSecond", scorePerSecond)
-        editor.putInt("upgrade1Price", upgrade1Price)
+        editor.putInt("score", scoreData.score)
+        editor.putInt("scorePerSecond", scoreData.scorePerSecond)
+        editor.putInt("upgrade1Price", upgradeData.upgrade1Price)
+        editor.putInt("upgrade1Value", upgradeData.upgrade1Value)
         //Add other upgrades
         editor.apply()
     }
