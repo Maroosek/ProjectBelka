@@ -1,173 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.479"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.692" />
+        android:fitsSystemWindows="true">
 
-    <TextView
-        android:id="@+id/scoreTotal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ScoreValue"
-        app:layout_constraintBottom_toTopOf="@+id/scoreButton"
-        app:layout_constraintEnd_toEndOf="@+id/scorePerSecond"
-        app:layout_constraintStart_toStartOf="@+id/scorePerSecond"
-        app:layout_constraintTop_toBottomOf="@+id/scorePerSecond" />
+        <TextView
+            android:id="@+id/scoreTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="200dp"
+            android:text="@string/Score" />
 
-    <TextView
-        android:id="@+id/scorePerSecond"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
-        android:text="SPS"
-        app:layout_constraintBottom_toTopOf="@+id/scoreButton"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        <TextView
+            android:id="@+id/scorePerSecond"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="200dp"
+            android:text="@string/Score" />
 
-    <TextView
-        android:id="@+id/upgradeText1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upgrade 1"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonUpgrade1"
-        app:layout_constraintEnd_toStartOf="@+id/buttonUpgrade1"
-        app:layout_constraintHorizontal_bias="0.297"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buttonUpgrade1"
-        app:layout_constraintVertical_bias="0.482" />
 
-    <TextView
-        android:id="@+id/upgradeText2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upgrade 2"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonUpgrade2"
-        app:layout_constraintEnd_toStartOf="@+id/buttonUpgrade2"
-        app:layout_constraintHorizontal_bias="0.301"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buttonUpgrade2"
-        app:layout_constraintVertical_bias="0.482" />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize" />
 
-    <TextView
-        android:id="@+id/upgradeText3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upgrade 3"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonUpgrade3"
-        app:layout_constraintEnd_toStartOf="@+id/buttonUpgrade3"
-        app:layout_constraintHorizontal_bias="0.297"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buttonUpgrade3"
-        app:layout_constraintVertical_bias="0.482" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-    <TextView
-        android:id="@+id/upgradeText4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upgrade 4"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonUpgrade4"
-        app:layout_constraintEnd_toStartOf="@+id/buttonUpgrade4"
-        app:layout_constraintHorizontal_bias="0.301"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buttonUpgrade4"
-        app:layout_constraintVertical_bias="0.482" />
+    <include layout="@layout/content_main" />
 
-    <TextView
-        android:id="@+id/upgradeText5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upgrade 5"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonUpgrade5"
-        app:layout_constraintEnd_toStartOf="@+id/buttonUpgrade5"
-        app:layout_constraintHorizontal_bias="0.301"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buttonUpgrade5"
-        app:layout_constraintVertical_bias="0.517" />
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/fab"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom|end"-->
+<!--        android:layout_marginEnd="@dimen/fab_margin"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        app:srcCompat="@android:drawable/ic_dialog_email" />-->
 
-    <Button
-        android:id="@+id/buttonUpgrade1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upgrade 1"
-        app:layout_constraintBottom_toTopOf="@+id/buttonUpgrade3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.454" />
-
-    <Button
-        android:id="@+id/buttonUpgrade2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upgrade 2"
-        app:layout_constraintBottom_toTopOf="@+id/buttonUpgrade3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUpgrade1"
-        app:layout_constraintVertical_bias="0.261" />
-
-    <Button
-        android:id="@+id/buttonUpgrade3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upgrade 3"
-        app:layout_constraintBottom_toTopOf="@+id/scoreButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.387" />
-
-    <Button
-        android:id="@+id/buttonUpgrade4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upgrade 4"
-        app:layout_constraintBottom_toTopOf="@+id/buttonUpgrade5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUpgrade3"
-        app:layout_constraintVertical_bias="0.656" />
-
-    <Button
-        android:id="@+id/buttonUpgrade5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upgrade 5"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUpgrade3"
-        app:layout_constraintVertical_bias="0.189" />
-
-    <Button
-        android:id="@+id/scoreButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
