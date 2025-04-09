@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:text="@string/upgradeClick"
 
-            app:layout_constraintBottom_toBottomOf="parent"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/upgradeIdle"
-            app:layout_constraintBottom_toBottomOf="parent"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/upgradeClickButton" />
@@ -52,6 +52,25 @@
             app:layout_constraintEnd_toStartOf="@+id/upgradeIdleButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/upgradeIdleButton" />
+
+        <Button
+            android:id="@+id/upgradeIdlePercentageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/upgradeIdlePercentage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/upgradeIdleButton" />
+
+        <TextView
+            android:id="@+id/upgradeIdlePercentageText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/upgradeIdlePercentageTextView"
+            app:layout_constraintBottom_toBottomOf="@+id/upgradeIdlePercentageButton"
+            app:layout_constraintEnd_toStartOf="@+id/upgradeIdlePercentageButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/upgradeIdlePercentageButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

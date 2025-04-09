@@ -12,4 +12,6 @@
     <string name="upgradeClick">Buy</string>
     <string name="upgradeIdle">Buy idle</string>
     <string name="upgradeIdleTextView">Buy idle upgrade</string>
+    <string name="upgradeIdlePercentage">Percentage</string>
+    <string name="upgradeIdlePercentageTextView">XDD</string>
 </resources>

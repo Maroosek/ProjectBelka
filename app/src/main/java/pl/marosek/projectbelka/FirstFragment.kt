@@ -34,7 +34,7 @@ class FirstFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.scoreButton.setOnClickListener {
-            gameData.score += gameData.scorePerClick
+            gameData.score += gameData.scorePerClickInt
             //binding.scoreTotal.text = gameData.score.toString()
         }
 
