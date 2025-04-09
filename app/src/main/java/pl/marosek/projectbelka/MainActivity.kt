@@ -5,14 +5,19 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.TextView
 import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import pl.marosek.projectbelka.databinding.ActivityMainBinding
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.Locale
 
+val gameData = GameScoreData()
+
+//TODO Fix layout to start from bottom, add some wacky animations :-D
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -20,6 +25,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        loadGame()
+
+        val df = DecimalFormat("#.#", DecimalFormatSymbols(Locale.US))
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -35,16 +44,12 @@ class MainActivity : AppCompatActivity() {
         idleScoreHandler.post(object : Runnable {
             override fun run() {
                 gameData.score += (gameData.scorePerSecondInt)/10
-                refreshText(binding.scoreTotal, gameData.score)
+                refreshText(binding.scoreTotal, df.format(gameData.score).toDouble())
+                refreshText(binding.scorePerSecond, df.format(gameData.scorePerSecondInt).toDouble())
                 //Toast.makeText(applicationContext, "1 second passed ${gameData.scorePerSecond}", Toast.LENGTH_SHORT).show()
                 idleScoreHandler.postDelayed(this, 100)
             }
         })
-
-//        binding.fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-//        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -57,61 +62,78 @@ class MainActivity : AppCompatActivity() {
         text.text = number.toString()
     }
 
-    //TODO rework save/load functions
-    fun loadGame() {
-        val game = GameFunction()
+    private fun loadGame() {
         val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
-        //gameData.score = sharedPreferences.getInt("score", 0)
-        //gameData.scorePerSecond = sharedPreferences.getInt("scorePerSecond", 0)
+
+        if (!sharedPreferences.contains("score")) {
+            //Toast.makeText(this, "Brak zapisanej gry", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        gameData.score = sharedPreferences.getString("score", 0.toString())?.toDouble() ?: 0.0
+        gameData.scorePerClick = sharedPreferences.getString("scorePerClick", 0.toString())?.toDouble() ?: 0.0
+        gameData.scorePerSecond = sharedPreferences.getString("scorePerSecond", 0.toString())?.toDouble() ?: 0.0
+        gameData.upgrade1Bought = sharedPreferences.getInt("upgrade1Bought", 0)
+        gameData.upgrade2Bought = sharedPreferences.getInt("upgrade2Bought", 0)
+        gameData.upgrade3Bought = sharedPreferences.getInt("upgrade3Bought", 0)
+        gameData.upgrade1Price = sharedPreferences.getInt("upgrade1Price", 0)
+        gameData.upgrade1Value = sharedPreferences.getInt("upgrade1Value", 0)
+        gameData.upgrade2Price = sharedPreferences.getInt("upgrade2Price", 0)
+        gameData.upgrade2Value = sharedPreferences.getInt("upgrade2Value", 0)
+        gameData.upgrade3Price = sharedPreferences.getInt("upgrade3Price", 0)
+        gameData.upgrade3Value = sharedPreferences.getString("upgrade3Value", 0.toString())?.toDouble() ?: 0.0
+
+        //Toast.makeText(this, "Score: ${gameData.score}", Toast.LENGTH_SHORT).show()
+
         //afk time reward
         var timeAFK = (System.currentTimeMillis() / 1000).toInt() - sharedPreferences.getInt("lastTime", 0)
         if (timeAFK > 14440) { //4 hours of idle time
             timeAFK = 14440
-        }
-        Toast.makeText(this, "Time AFK: $timeAFK", Toast.LENGTH_SHORT).show()
-        //gameData.score += game.addIdleScore(timeAFK, gameData.scorePerSecond)
-        //Add other upgrades
 
-        refreshText(findViewById(R.id.scoreTotal), gameData.score)
-        refreshText(findViewById(R.id.scorePerSecond), gameData.scorePerSecond)
-//        refreshText(findViewById(R.id.upgradeText1), upgradeData.upgrade1Price)
-//        refreshText(findViewById(R.id.upgradeText2), upgradeData.upgrade2Price)
-//        refreshText(findViewById(R.id.upgradeText3), upgradeData.upgrade3Price)
-//        refreshText(findViewById(R.id.upgradeText4), upgradeData.upgrade4Price)
-//        refreshText(findViewById(R.id.upgradeText5), upgradeData.upgrade5Price)
+        }
+        val afkScore = timeAFK * 0.01 * gameData.scorePerSecondInt
+        gameData.score += afkScore
+        Toast.makeText(this, "Time AFK: $timeAFK Added points $afkScore", Toast.LENGTH_SHORT).show()
     }
 
-    fun saveGame() {
+    private fun saveGame() {
+
         val currentTime = System.currentTimeMillis() / 1000
         val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
-        //editor.putInt("score", gameData.score)
-        //editor.putInt("scorePerSecond", gameData.scorePerSecond)
-//        editor.putInt("upgrade1Price", upgradeData.upgrade1Price)
-//        editor.putInt("upgrade1Value", upgradeData.upgrade1Value)
-//        editor.putInt("upgrade2Price", upgradeData.upgrade2Price)
-//        editor.putInt("upgrade2Value", upgradeData.upgrade2Value)
+        editor.putString("score", gameData.score.toString())
+        editor.putString("scorePerSecond", gameData.scorePerSecond.toString())
+        editor.putString("scorePerClick", gameData.scorePerClick.toString())
+        editor.putInt("upgrade1Bought", gameData.upgrade1Bought)
+        editor.putInt("upgrade2Bought", gameData.upgrade2Bought)
+        editor.putInt("upgrade3Bought", gameData.upgrade3Bought)
+        editor.putInt("upgrade1Price", gameData.upgrade1Price)
+        editor.putInt("upgrade1Value", gameData.upgrade1Value)
+        editor.putInt("upgrade2Price", gameData.upgrade2Price)
+        editor.putInt("upgrade2Value", gameData.upgrade2Value)
+        editor.putInt("upgrade3Price", gameData.upgrade3Price)
+        editor.putString("upgrade3Value", gameData.upgrade3Value.toString())
         editor.putInt("lastTime", currentTime.toInt())
-        //Add other upgrades
         editor.apply()
     }
 
     override fun onResume() {
         super.onResume()
-        //loadGame()
+        loadGame()
     }
+
     override fun onPause() {
         super.onPause()
-        //saveGame()
+        saveGame()
     }
 
     override fun onStop() {
         super.onStop()
-        //saveGame()
+        saveGame()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        //saveGame()
+        saveGame()
     }
 }

@@ -10,16 +10,12 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import pl.marosek.projectbelka.databinding.FragmentSecondBinding
 import kotlin.math.pow
-//TODO tone down the upgrade values to slow down the game
-/**
- * A simple [Fragment] subclass as the second destination in the navigation.
- */
+//TODO rebalance upgrades
+
 class SecondFragment : Fragment() {
 
     private var _binding: FragmentSecondBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -35,6 +31,7 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         //binding.upgradeClickButton.text = gameData.upgrade1Price.toString()
         binding.upgradeClickText.text = "Price: ${gameData.upgrade1Price}"
         binding.upgradeIdleText.text = "Price: ${gameData.upgrade2Price}"
@@ -49,7 +46,7 @@ class SecondFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            if (gameData.upgrade1Bought >= 6) {
+            if (gameData.upgrade1Bought >= 10) {
                 Toast.makeText(context, "Already bought Max", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -58,8 +55,8 @@ class SecondFragment : Fragment() {
             gameData.scorePerClick += gameData.upgrade1Value
 
             gameData.upgrade1Bought += 1
-            gameData.upgrade1Price = 25 * 1.5.pow(gameData.upgrade1Bought.toDouble()).toInt()
-            //gameData.upgrade1Value *= 2
+            gameData.upgrade1Price = 25 * 2.0.pow(gameData.upgrade1Bought.toDouble()).toInt()
+            gameData.upgrade1Value += 1
 
             //refreshText(binding.upgradeClickButton, gameData.upgrade1Price)
             refreshText(binding.upgradeClickText, gameData.upgrade1Price)
@@ -81,8 +78,16 @@ class SecondFragment : Fragment() {
             gameData.score -= gameData.upgrade2Price
             gameData.scorePerSecond += gameData.upgrade2Value
 
+            if (gameData.upgrade2Bought == 0) {
+                gameData.upgrade2Bought += 1
+                gameData.scorePerSecond += 1
+                gameData.upgrade2Price = 100 * 2.0.pow(gameData.upgrade2Bought.toDouble()).toInt()
+                refreshText(binding.upgradeIdleText, gameData.upgrade2Price)
+                return@setOnClickListener
+            }
+
             gameData.upgrade2Bought += 1
-            gameData.upgrade2Price = 100 * 1.5.pow(gameData.upgrade2Bought.toDouble()).toInt()
+            gameData.upgrade2Price = 100 * 2.0.pow(gameData.upgrade2Bought.toDouble()).toInt()
             gameData.upgrade2Value *= 2
 
             refreshText(binding.upgradeIdleText, gameData.upgrade2Price)
@@ -105,14 +110,14 @@ class SecondFragment : Fragment() {
             gameData.scorePerSecond += gameData.upgrade3Value
 
             gameData.upgrade3Bought += 1
-            gameData.upgrade3Price = 750 * 1.4.pow(gameData.upgrade3Bought.toDouble()).toInt()
-            gameData.upgrade3Value *= 2
+            gameData.upgrade3Price = 750 * 2.5.pow(gameData.upgrade3Bought.toDouble()).toInt()
+            gameData.upgrade3Value += 0.1
 
             refreshText(binding.upgradeIdlePercentageText, gameData.upgrade3Price)
         }
     }
 
-    fun refreshText(text: TextView, number: Int) {
+    private fun refreshText(text: TextView, number: Int) {
         text.text = number.toString()
     }
 
