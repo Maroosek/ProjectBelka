@@ -1,44 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FirstFragment">
 
+    <FrameLayout
+        android:id="@+id/bouncerContainer"
+        android:layout_width="350dp"
+        android:layout_height="400dp"
+        android:background="@color/greyLight"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/scoreButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+<!--        <pl.marosek.projectbelka.Bouncer-->
+<!--            android:id="@+id/bouncer"-->
+<!--            android:layout_width="25dp"-->
+<!--            android:layout_height="25dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:src="@mipmap/ic_launcher"-->
+<!--            android:scaleType="fitCenter"-->
+<!--        />-->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:padding="16dp">
-
-        <Button
-            android:id="@+id/upgradeMenuButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/UpgradeMenu"
-            app:layout_constraintEnd_toStartOf="@+id/scoreButton"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/scoreButton" />
 
         <Button
             android:id="@+id/scoreButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
             android:text="@string/Click"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <Button
+            android:id="@+id/upgradeMenuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="7dp"
+            android:text="@string/UpgradeMenu"
+            app:layout_constraintBottom_toBottomOf="@+id/scoreButton"
+            app:layout_constraintEnd_toStartOf="@+id/scoreButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/scoreButton" />
+
+        <Button
+            android:id="@+id/addDummyButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/AddDummy"
+            app:layout_constraintBottom_toBottomOf="@+id/scoreButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/scoreButton"
+            app:layout_constraintTop_toTopOf="@+id/scoreButton" />
+
+
         <TextView
-            android:id="@+id/textview_first"
+            android:id="@+id/debug"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/debugText"
-
-            app:layout_constraintBottom_toTopOf="@+id/scoreButton"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/upgradeMenuButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="16dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+</FrameLayout>

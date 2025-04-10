@@ -17,7 +17,6 @@ import java.util.Locale
 
 val gameData = GameScoreData()
 
-//TODO Fix layout to start from bottom, add some wacky animations :-D
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -44,8 +43,10 @@ class MainActivity : AppCompatActivity() {
         idleScoreHandler.post(object : Runnable {
             override fun run() {
                 gameData.score += (gameData.scorePerSecondInt)/10
-                refreshText(binding.scoreTotal, df.format(gameData.score).toDouble())
-                refreshText(binding.scorePerSecond, df.format(gameData.scorePerSecondInt).toDouble())
+//                refreshText(binding.scoreTotal, df.format(gameData.score).toDouble())
+//                refreshText(binding.scorePerSecond, df.format(gameData.scorePerSecondInt).toDouble())
+                binding.scoreTotal.text =  "Score: " + df.format(gameData.score).toDouble().toString()
+                binding.scorePerSecond.text = "Score per second: " + df.format(gameData.scorePerSecondInt).toDouble().toString()
                 //Toast.makeText(applicationContext, "1 second passed ${gameData.scorePerSecond}", Toast.LENGTH_SHORT).show()
                 idleScoreHandler.postDelayed(this, 100)
             }
@@ -58,9 +59,9 @@ class MainActivity : AppCompatActivity() {
                 || super.onSupportNavigateUp()
     }
 
-    fun refreshText(text: TextView, number: Double) {
-        text.text = number.toString()
-    }
+//    fun refreshText(text: TextView, number: Double) {
+//        text.text = number.toString()
+//    }
 
     private fun loadGame() {
         val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
@@ -76,12 +77,17 @@ class MainActivity : AppCompatActivity() {
         gameData.upgrade1Bought = sharedPreferences.getInt("upgrade1Bought", 0)
         gameData.upgrade2Bought = sharedPreferences.getInt("upgrade2Bought", 0)
         gameData.upgrade3Bought = sharedPreferences.getInt("upgrade3Bought", 0)
+        gameData.upgrade4Bought = sharedPreferences.getInt("upgrade4Bought", 0)
         gameData.upgrade1Price = sharedPreferences.getInt("upgrade1Price", 0)
         gameData.upgrade1Value = sharedPreferences.getInt("upgrade1Value", 0)
         gameData.upgrade2Price = sharedPreferences.getInt("upgrade2Price", 0)
         gameData.upgrade2Value = sharedPreferences.getInt("upgrade2Value", 0)
         gameData.upgrade3Price = sharedPreferences.getInt("upgrade3Price", 0)
         gameData.upgrade3Value = sharedPreferences.getString("upgrade3Value", 0.toString())?.toDouble() ?: 0.0
+        gameData.upgrade4Price = sharedPreferences.getInt("upgrade4Price", 0)
+        gameData.dummyValue = sharedPreferences.getInt("dummyValue", 0)
+        gameData.dummyPrice = sharedPreferences.getInt("dummyPrice", 0)
+
 
         //Toast.makeText(this, "Score: ${gameData.score}", Toast.LENGTH_SHORT).show()
 
@@ -107,20 +113,24 @@ class MainActivity : AppCompatActivity() {
         editor.putInt("upgrade1Bought", gameData.upgrade1Bought)
         editor.putInt("upgrade2Bought", gameData.upgrade2Bought)
         editor.putInt("upgrade3Bought", gameData.upgrade3Bought)
+        editor.putInt("upgrade4Bought", gameData.upgrade4Bought)
         editor.putInt("upgrade1Price", gameData.upgrade1Price)
         editor.putInt("upgrade1Value", gameData.upgrade1Value)
         editor.putInt("upgrade2Price", gameData.upgrade2Price)
         editor.putInt("upgrade2Value", gameData.upgrade2Value)
         editor.putInt("upgrade3Price", gameData.upgrade3Price)
         editor.putString("upgrade3Value", gameData.upgrade3Value.toString())
+        editor.putInt("upgrade4Price", gameData.upgrade4Price)
+        editor.putInt("dummyValue", gameData.dummyValue)
+        editor.putInt("dummyPrice", gameData.dummyPrice)
         editor.putInt("lastTime", currentTime.toInt())
         editor.apply()
     }
 
-    override fun onResume() {
-        super.onResume()
-        loadGame()
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        //loadGame()
+//    }
 
     override fun onPause() {
         super.onPause()

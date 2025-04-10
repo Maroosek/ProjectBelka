@@ -72,5 +72,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/upgradeIdlePercentageButton" />
 
+        <Button
+            android:id="@+id/upgradeClickDoubleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/upgradeClickDoubleButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/upgradeIdlePercentageButton" />
+
+        <TextView
+            android:id="@+id/upgradeClickDoubleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/upgradeClickDoubleTextView"
+            app:layout_constraintBottom_toBottomOf="@+id/upgradeClickDoubleButton"
+            app:layout_constraintEnd_toStartOf="@+id/upgradeClickDoubleButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/upgradeClickDoubleButton" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
